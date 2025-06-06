@@ -46,7 +46,7 @@ MainWindow::MainWindow(QWidget *parent)
     setupConnections();
     
     // 设置窗口属性
-    setWindowTitle("Crypt Browser - 目录");
+    setWindowTitle("Crypt Browser - Index");
     resize(800, 600);
     
     // 创建归档管理器
@@ -61,7 +61,7 @@ MainWindow::~MainWindow()
 bool MainWindow::setArchivePath(const QString &path)
 {
     if (!m_archiveManager->setArchivePath(path)) {
-        QMessageBox::critical(this, "错误", "无法设置压缩包路径");
+        QMessageBox::critical(this, "Error", "Cannot set archive path");
         return false;
     }
     
@@ -100,7 +100,7 @@ void MainWindow::setupUI()
     m_mainLayout->setSpacing(10);
     
     // 创建状态标签
-    m_statusLabel = new QLabel("正在初始化...", this);
+    m_statusLabel = new QLabel("Initializing...", this);
     m_statusLabel->setStyleSheet("font-size: 14px; color: #666; padding: 5px;");
     m_statusLabel->setAlignment(Qt::AlignCenter);
     
@@ -131,8 +131,8 @@ void MainWindow::setupConnections()
 bool MainWindow::promptForPassword()
 {
     bool ok;
-    QString password = QInputDialog::getText(this, "输入密码", 
-                                           "请输入压缩包密码:", 
+    QString password = QInputDialog::getText(this, "Enter Password", 
+                                           "Please enter archive password:", 
                                            QLineEdit::Password, 
                                            QString(), &ok);
     
@@ -140,14 +140,14 @@ bool MainWindow::promptForPassword()
         return false; // 用户取消
     }
     
-    m_statusLabel->setText("正在解压文件...");
+    m_statusLabel->setText("Extracting files...");
     QApplication::processEvents();
     
     if (!m_archiveManager->extractArchive(password)) {
         return false; // 解压失败，错误信息已在ArchiveManager中显示
     }
     
-    m_statusLabel->setText("解压完成，正在生成目录...");
+    m_statusLabel->setText("Extraction complete, generating index...");
     return true;
 }
 
@@ -305,18 +305,18 @@ void MainWindow::createIndexPage()
         QUrl indexUrl = QUrl::fromLocalFile(m_indexHtmlPath);
         m_webView->load(indexUrl);
         
-        m_statusLabel->setText("目录页面已生成");
+        m_statusLabel->setText("Index page generated");
     } else {
-        QMessageBox::critical(this, "错误", "无法创建目录页面文件");
+        QMessageBox::critical(this, "Error", "Cannot create index page file");
     }
 }
 
 void MainWindow::onIndexPageLoadFinished(bool success)
 {
     if (success) {
-        m_statusLabel->setText("就绪 - 点击文件名打开文档");
+        m_statusLabel->setText("Ready - Click file name to open document");
     } else {
-        m_statusLabel->setText("目录页面加载失败");
+        m_statusLabel->setText("Index page load failed");
     }
 }
 
@@ -339,7 +339,7 @@ void MainWindow::onLinkClicked(const QUrl &url)
             webViewWindow->raise();
             webViewWindow->activateWindow();
         } else {
-            QMessageBox::warning(this, "警告", QString("文件不存在: %1").arg(filePath));
+            QMessageBox::warning(this, "Warning", QString("File not found: %1").arg(filePath));
         }
     }
 }

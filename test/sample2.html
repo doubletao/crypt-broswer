@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>测试文档 2 - 数据安全</title>
+    <style>
+        body {
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        h1 {
+            color: #e74c3c;
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+        }
+        h2 {
+            color: #2c3e50;
+            border-left: 4px solid #e74c3c;
+            padding-left: 15px;
+        }
+        .security-level {
+            display: inline-block;
+            padding: 5px 15px;
+            background-color: #dc3545;
+            color: white;
+            border-radius: 20px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        .warning {
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        .feature {
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #f8f9fa;
+            font-weight: bold;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background-color: #e9ecef;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #28a745, #20c997);
+            width: 85%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🛡️ 数据安全与隐私保护</h1>
+        
+        <div class="security-level">安全等级: 高</div>
+        
+        <h2>🔐 加密特性</h2>
+        <p>Crypt Browser 专为处理敏感文档而设计，提供多层安全保护机制。</p>
+        
+        <div class="feature">
+            <strong>✅ 临时存储机制</strong><br>
+            所有解压的文件都存储在系统临时目录中，程序退出时自动清理，确保不留痕迹。
+        </div>
+        
+        <div class="feature">
+            <strong>✅ 密码保护</strong><br>
+            支持强密码保护的7z压缩包，保护您的机密文档免受未授权访问。
+        </div>
+        
+        <div class="feature">
+            <strong>✅ 内存安全</strong><br>
+            采用现代C++内存管理技术，防止内存泄露和数据残留。
+        </div>
+        
+        <div class="warning">
+            <strong>⚠️ 安全提醒</strong><br>
+            请确保在安全的环境中使用本程序，并在使用完毕后及时关闭所有窗口。虽然程序会自动清理临时文件，但建议您定期清理系统临时目录。
+        </div>
+        
+        <h2>📊 安全性能指标</h2>
+        <table>
+            <tr>
+                <th>安全特性</th>
+                <th>实现状态</th>
+                <th>安全等级</th>
+            </tr>
+            <tr>
+                <td>自动文件清理</td>
+                <td>已实现</td>
+                <td>高</td>
+            </tr>
+            <tr>
+                <td>密码验证</td>
+                <td>已实现</td>
+                <td>高</td>
+            </tr>
+            <tr>
+                <td>内存保护</td>
+                <td>已实现</td>
+                <td>中高</td>
+            </tr>
+            <tr>
+                <td>网络隔离</td>
+                <td>已实现</td>
+                <td>高</td>
+            </tr>
+        </table>
+        
+        <h2>🔧 技术实现</h2>
+        <p>安全清理进度：</p>
+        <div class="progress-bar">
+            <div class="progress-fill">85% 完成</div>
+        </div>
+        
+        <ul>
+            <li><strong>QTemporaryDir</strong>: 自动管理临时目录生命周期</li>
+            <li><strong>RAII原则</strong>: 确保资源在对象析构时正确释放</li>
+            <li><strong>Qt信号槽机制</strong>: 安全的窗口间通信</li>
+            <li><strong>异常安全</strong>: 即使程序异常退出也能正确清理</li>
+        </ul>
+        
+        <h2>🎯 最佳实践</h2>
+        <div class="feature">
+            <ol>
+                <li>使用强密码保护您的压缩包</li>
+                <li>定期更换压缩包密码</li>
+                <li>在使用完毕后立即关闭程序</li>
+                <li>避免在共享计算机上使用</li>
+                <li>定期清理系统临时文件</li>
+            </ol>
+        </div>
+        
+        <footer style="margin-top: 50px; text-align: center; color: #666; font-size: 14px;">
+            <p>🔒 您的数据安全是我们的首要任务</p>
+        </footer>
+    </div>
+</body>
+</html> 

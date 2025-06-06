@@ -5,6 +5,7 @@
 #include <QMessageBox>
 #include <QApplication>
 #include <QIcon>
+#include <QWebEngineHistory>
 
 WebViewWindow::WebViewWindow(const QString &filePath, QWidget *parent)
     : QMainWindow(parent)
@@ -59,22 +60,22 @@ void WebViewWindow::setupUI()
     m_toolbarLayout->setSpacing(5);
     
     // 创建导航按钮
-    m_backButton = new QPushButton("←", this);
-    m_backButton->setToolTip("后退");
+    m_backButton = new QPushButton("<", this);
+    m_backButton->setToolTip("Back");
     m_backButton->setFixedSize(30, 30);
     m_backButton->setEnabled(false);
     
-    m_forwardButton = new QPushButton("→", this);
-    m_forwardButton->setToolTip("前进");
+    m_forwardButton = new QPushButton(">", this);
+    m_forwardButton->setToolTip("Forward");
     m_forwardButton->setFixedSize(30, 30);
     m_forwardButton->setEnabled(false);
     
-    m_refreshButton = new QPushButton("⟳", this);
-    m_refreshButton->setToolTip("刷新");
+    m_refreshButton = new QPushButton("R", this);
+    m_refreshButton->setToolTip("Refresh");
     m_refreshButton->setFixedSize(30, 30);
     
     // 创建标题标签
-    m_titleLabel = new QLabel("加载中...", this);
+    m_titleLabel = new QLabel("Loading...", this);
     m_titleLabel->setStyleSheet("font-weight: bold; color: #333;");
     
     // 创建进度条
@@ -128,7 +129,7 @@ void WebViewWindow::onLoadStarted()
 {
     m_progressBar->setVisible(true);
     m_progressBar->setValue(0);
-    m_titleLabel->setText("加载中...");
+    m_titleLabel->setText("Loading...");
 }
 
 void WebViewWindow::onLoadProgress(int progress)
@@ -141,8 +142,8 @@ void WebViewWindow::onLoadFinished(bool success)
     m_progressBar->setVisible(false);
     
     if (!success) {
-        m_titleLabel->setText("加载失败");
-        QMessageBox::warning(this, "警告", "页面加载失败");
+        m_titleLabel->setText("Load Failed");
+        QMessageBox::warning(this, "Warning", "Page load failed");
     } else {
         // 如果没有标题，使用文件名
         if (m_webView->title().isEmpty()) {

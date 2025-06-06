@@ -1,4 +1,5 @@
 #include "archivemanager.h"
+#include "config.h"
 #include <QApplication>
 #include <QStandardPaths>
 #include <QMessageBox>
@@ -33,7 +34,7 @@ bool ArchiveManager::setArchivePath(const QString &path)
     
     m_tempDir = new QTemporaryDir();
     if (!m_tempDir->isValid()) {
-        QMessageBox::critical(nullptr, "错误", "无法创建临时目录");
+        QMessageBox::critical(nullptr, "Error", "Cannot create temporary directory");
         return false;
     }
     
@@ -48,7 +49,7 @@ bool ArchiveManager::extractArchive(const QString &password)
     
     // 构建 7z 解压命令
     QProcess process;
-    QString program = "7z.exe";
+    QString program = SEVEN_ZIP_PATH;
     QStringList arguments;
     
     arguments << "x"                    // 解压命令
@@ -64,19 +65,19 @@ bool ArchiveManager::extractArchive(const QString &password)
     process.start(program, arguments);
     
     if (!process.waitForStarted()) {
-        QMessageBox::critical(nullptr, "错误", "无法启动 7z.exe，请确保 7z 已安装并在系统路径中");
+        QMessageBox::critical(nullptr, "Error", "Cannot start 7z.exe, please ensure 7z is installed");
         return false;
     }
     
     if (!process.waitForFinished(30000)) { // 30秒超时
-        QMessageBox::critical(nullptr, "错误", "解压超时");
+        QMessageBox::critical(nullptr, "Error", "Extraction timeout");
         process.kill();
         return false;
     }
     
     if (process.exitCode() != 0) {
         QString errorOutput = process.readAllStandardError();
-        QMessageBox::critical(nullptr, "解压失败", QString("解压失败，可能是密码错误或文件损坏。\n错误信息: %1").arg(errorOutput));
+        QMessageBox::critical(nullptr, "Extraction Failed", QString("Extraction failed, possibly wrong password or corrupted file.\nError: %1").arg(errorOutput));
         return false;
     }
     

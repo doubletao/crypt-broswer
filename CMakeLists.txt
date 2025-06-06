@@ -1,12 +1,17 @@
-cmake_minimum_required(VERSION 3.16)
+cmake_minimum_required(VERSION 3.10)
 
 project(crypt-browser VERSION 1.0.0)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Qt6 组件
-find_package(Qt6 REQUIRED COMPONENTS Core Widgets WebEngineWidgets)
+# Windows 特定编译选项：支持UTF-8编码
+if(WIN32)
+    add_compile_options("/utf-8")
+endif()
+
+# Qt5 组件
+find_package(Qt5 REQUIRED COMPONENTS Core Widgets WebEngineWidgets)
 
 # 自动处理 Qt 的 MOC、UIC、RCC
 set(CMAKE_AUTOMOC ON)
@@ -26,16 +31,17 @@ set(HEADERS
     src/mainwindow.h
     src/webviewwindow.h
     src/archivemanager.h
+    src/config.h
 )
 
 # 创建可执行文件
 add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})
 
-# 链接 Qt 库
+# 链接 Qt5 库
 target_link_libraries(${PROJECT_NAME} 
-    Qt6::Core 
-    Qt6::Widgets 
-    Qt6::WebEngineWidgets
+    Qt5::Core 
+    Qt5::Widgets 
+    Qt5::WebEngineWidgets
 )
 
 # 设置包含目录
