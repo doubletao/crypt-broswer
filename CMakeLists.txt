@@ -32,6 +32,7 @@ set(HEADERS
     src/webviewwindow.h
     src/archivemanager.h
     src/config.h
+src/config.cpp
 )
 
 # 创建可执行文件

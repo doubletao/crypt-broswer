@@ -49,7 +49,7 @@ bool ArchiveManager::extractArchive(const QString &password)
     
     // 构建 7z 解压命令
     QProcess process;
-    QString program = SEVEN_ZIP_PATH;
+    QString program = Config::instance()->sevenZipPath();
     QStringList arguments;
     
     arguments << "x"                    // 解压命令

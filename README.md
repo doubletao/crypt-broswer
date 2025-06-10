@@ -35,7 +35,7 @@ Crypt Browser 是一个基于 Qt5 WebEngine 的加密压缩包浏览器，专门
 从 [7-Zip官网](https://www.7-zip.org/) 下载并安装7-Zip。
 
 **注意**: 项目已配置默认7z路径为 `C:\Program Files (x86)\7-Zip\7z.exe`，如果您的安装路径不同，请修改：
-- `src/config.h` 中的 `SEVEN_ZIP_PATH` 定义（推荐）
+- `config.ini` 文件中的路径配置（推荐）
 - `create_test_archive.bat` 中的 `SEVEN_ZIP` 变量（仅影响测试脚本）
 
 ### 3. 安装CMake
@@ -176,8 +176,39 @@ crypt-browser/
 │   ├── webviewwindow.cpp  # 网页浏览窗口实现
 │   ├── archivemanager.h   # 压缩包管理器头文件
 │   ├── archivemanager.cpp # 压缩包管理器实现
-│   └── config.h           # 配置文件（7z路径等）
+│   ├── config.h           # 配置类头文件
+│   └── config.cpp         # 配置类实现文件
+├── config.ini             # 示例配置文件
 └── README.md              # 项目说明文档
+```
+
+## 配置文件
+
+程序使用 `config.ini` 文件进行配置，该文件会在编译时自动生成到输出目录。
+
+### 配置文件格式
+
+```ini
+[Paths]
+SevenZip=C:/Program Files (x86)/7-Zip/7z.exe
+
+[App]
+Name=Crypt Browser
+Version=1.0.0
+Organization=CryptBrowser
+```
+
+### 配置说明
+
+- `[Paths]` 部分：
+  - `SevenZip`: 7z.exe 程序的完整路径
+- `[App]` 部分：
+  - `Name`: 应用程序名称
+  - `Version`: 版本号
+  - `Organization`: 组织名称
+
+**注意**: 如果您的7-Zip安装在其他位置，请手动修改 `config.ini` 文件中的 `SevenZip` 路径。
+
 ```
 
 ## 特性说明
@@ -204,7 +235,7 @@ crypt-browser/
 
 1. **无法启动7z.exe**
    - 确保7-Zip已安装到 `C:\Program Files (x86)\7-Zip\` 目录
-   - 如果安装路径不同，请修改 `src/config.h` 中的 `SEVEN_ZIP_PATH` 定义
+   - 如果安装路径不同，请修改程序目录下的 `config.ini` 文件中的 `SevenZip` 路径
 
 2. **密码错误**
    - 确认输入的密码正确
@@ -235,6 +266,7 @@ crypt-browser/
 - Qt5 WebEngine
 - CMake
 - 7-Zip
+- INI配置文件系统
 
 ### 核心组件
 - `ArchiveManager`: 负责压缩包解压和临时文件管理

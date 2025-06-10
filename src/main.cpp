@@ -11,10 +11,13 @@ int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
     
+    // 初始化配置
+    Config* config = Config::instance();
+    
     // 设置应用程序信息
-    app.setApplicationName(APP_NAME);
-    app.setApplicationVersion(APP_VERSION);
-    app.setOrganizationName(APP_ORGANIZATION);
+    app.setApplicationName(config->appName());
+    app.setApplicationVersion(config->appVersion());
+    app.setOrganizationName(config->appOrganization());
     
     // 弹出文件选择对话框
     QString archivePath = QFileDialog::getOpenFileName(

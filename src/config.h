@@ -1,17 +1,38 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-// 7-Zip 程序路径配置
-// 如果您的7-Zip安装在不同路径，请修改此处
-#ifdef Q_OS_WIN
-    #define SEVEN_ZIP_PATH "C:/Program Files (x86)/7-Zip/7z.exe"
-#else
-    #define SEVEN_ZIP_PATH "7z"  // Linux/Mac 使用系统PATH中的7z
-#endif
+#include <QObject>
+#include <QSettings>
+#include <QString>
 
-// 应用程序配置
-#define APP_NAME "Crypt Browser"
-#define APP_VERSION "1.0.0"
-#define APP_ORGANIZATION "CryptBrowser"
+class Config : public QObject
+{
+    Q_OBJECT
+
+public:
+    // 单例模式
+    static Config* instance();
+    
+    // 获取配置值
+    QString sevenZipPath() const;
+    QString appName() const;
+    QString appVersion() const;
+    QString appOrganization() const;
+    QString configFilePath() const;
+    
+    // 设置配置值
+    void setSevenZipPath(const QString &path);
+
+private:
+    explicit Config(QObject *parent = nullptr);
+    ~Config();
+    
+    // 设置默认值
+    void setDefaultValues();
+    
+    static Config* m_instance;
+    QSettings* m_settings;
+    QString m_configFilePath;
+};
 
 #endif // CONFIG_H 

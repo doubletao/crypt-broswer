@@ -69,6 +69,20 @@ if %ERRORLEVEL% NEQ 0 (
 echo Qt dependencies deployed successfully!
 
 :skip_deploy
+
+REM Generate config file
+echo Generating config file...
+(
+echo [Paths]
+echo SevenZip=C:/Program Files ^(x86^)/7-Zip/7z.exe
+echo.
+echo [App]
+echo Name=Crypt Browser
+echo Version=1.0.0
+echo Organization=CryptBrowser
+) > Release\config.ini
+
+echo Config file generated: Release\config.ini
 echo.
 echo =================================
 echo Build and deployment complete!

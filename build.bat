@@ -71,6 +71,20 @@ if %ERRORLEVEL% NEQ 0 (
 echo Qt依赖文件部署完成！
 
 :skip_deploy
+
+REM 生成配置文件
+echo 生成配置文件...
+(
+echo [Paths]
+echo SevenZip=C:/Program Files ^(x86^)/7-Zip/7z.exe
+echo.
+echo [App]
+echo Name=Crypt Browser
+echo Version=1.0.0
+echo Organization=CryptBrowser
+) > Release\config.ini
+
+echo 配置文件已生成: Release\config.ini
 echo.
 echo =================================
 echo 构建和部署完成！
