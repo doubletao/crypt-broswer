@@ -2,6 +2,7 @@
 #include <QDir>
 #include <QMessageBox>
 #include <QStandardPaths>
+#include <QFileDialog>
 #include "mainwindow.h"
 #include "archivemanager.h"
 #include "config.h"
@@ -15,17 +16,22 @@ int main(int argc, char *argv[])
     app.setApplicationVersion(APP_VERSION);
     app.setOrganizationName(APP_ORGANIZATION);
     
-    // 检查命令行参数
-    if (argc < 2) {
-        QMessageBox::critical(nullptr, "Error", "Please specify the encrypted archive file path.\nUsage: crypt-browser <archive path>");
-        return 1;
-    }
+    // 弹出文件选择对话框
+    QString archivePath = QFileDialog::getOpenFileName(
+        nullptr,
+        "Select Encrypted Archive File",
+        QDir::homePath(),
+        "Archive Files (*.7z *.zip *.rar);;7z Files (*.7z);;All Files (*.*)"
+    );
     
-    QString archivePath = QString::fromLocal8Bit(argv[1]);
+    // 检查用户是否取消了选择
+    if (archivePath.isEmpty()) {
+        return 0; // 用户取消，正常退出
+    }
     
     // 检查文件是否存在
     if (!QFile::exists(archivePath)) {
-        QMessageBox::critical(nullptr, "Error", QString("The specified file does not exist: %1").arg(archivePath));
+        QMessageBox::critical(nullptr, "Error", QString("The selected file does not exist: %1").arg(archivePath));
         return 1;
     }
     

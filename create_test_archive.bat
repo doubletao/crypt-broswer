@@ -38,7 +38,7 @@ echo 正在创建加密压缩包...
 echo 密码: %PASSWORD%
 echo.
 
-%SEVEN_ZIP% a -sfx -p%PASSWORD% -mx9 test_documents.exe .\test\*.html
+%SEVEN_ZIP% a -p%PASSWORD% -mhe=on -mx9 test_documents.7z .\test\*.html
 
 if %ERRORLEVEL% NEQ 0 (
     echo.
@@ -52,14 +52,15 @@ echo =================================
 echo 压缩包创建成功！
 echo =================================
 echo.
-echo 文件名: test_documents.exe
+echo 文件名: test_documents.7z
 echo 密码: %PASSWORD%
 echo 包含文件:
-%SEVEN_ZIP% l test_documents.exe
+%SEVEN_ZIP% l test_documents.7z
 echo.
 echo 测试方法:
-echo 1. 编译项目: build.bat
-echo 2. 运行程序: build\Release\crypt-browser.exe test_documents.exe
-echo 3. 输入密码: %PASSWORD%
+echo 1. 编译项目: build_simple.bat
+echo 2. 启动程序: build\Release\crypt-browser.exe
+echo 3. 在文件选择对话框中选择: test_documents.7z
+echo 4. 输入密码: %PASSWORD%
 echo.
 pause 

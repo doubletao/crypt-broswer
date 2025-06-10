@@ -77,17 +77,18 @@ cmake .. -G "Visual Studio 17 2022" -DCMAKE_PREFIX_PATH="D:/Qt/5.15.2/msvc2019_6
 假设您有一个包含HTML文件的目录 `files/`，使用以下命令创建加密压缩包：
 
 ```bash
-# 创建自解压的加密压缩包
-7z.exe a -sfx -pYourPassword archive.exe .\files\*
+# 创建加密压缩包（推荐：隐藏文件名）
+7z.exe a -pYourPassword -mhe=on archive.7z .\files\*
 
-# 或者创建普通的加密压缩包
+# 或者创建普通的加密压缩包（文件名可见）
 7z.exe a -pYourPassword archive.7z .\files\*
 ```
 
 **注意**: 
-- `-sfx` 参数创建自解压文件
+- `-mhe=on` 参数加密文件名和目录结构，确保安全性
 - `-pYourPassword` 中的 `YourPassword` 替换为您的实际密码
 - 支持的文件格式：`.html`, `.htm`, `.mhtml`, `.mht`
+- 推荐使用 `-mhe=on` 以获得最高安全性
 
 ## 快速测试
 
@@ -107,15 +108,20 @@ build.bat
 
 ### 2. 创建测试压缩包
 ```bash
-# 运行测试压缩包创建脚本
+# 运行测试压缩包创建脚本（高安全性，文件名隐藏）
 create_test_archive.bat
+
+# 可选：运行安全性对比演示脚本
+test_security.bat
 ```
 
 ### 3. 测试程序
 ```bash
-# 使用生成的测试压缩包测试程序
-build\Release\crypt-browser.exe test_documents.exe
+# 启动程序，在文件选择对话框中选择 test_documents.7z
+build\Release\crypt-browser.exe
 # 默认密码: test123
+
+# 或者直接双击 build\Release\crypt-browser.exe 启动
 ```
 
 ## 使用方法
@@ -123,22 +129,28 @@ build\Release\crypt-browser.exe test_documents.exe
 ### 1. 启动程序
 
 ```bash
-# 通过命令行启动，指定压缩包路径
-crypt-browser.exe "C:\path\to\your\archive.7z"
+# 直接启动程序，会弹出文件选择对话框
+crypt-browser.exe
+
+# 也可以双击可执行文件启动
 ```
 
-### 2. 输入密码
+### 2. 选择压缩包文件
 
-程序启动后会弹出密码输入对话框，输入正确的密码后开始解压。
+程序启动后会弹出文件选择对话框，选择您要打开的加密压缩包文件（支持.7z、.zip、.rar格式）。
 
-### 3. 浏览文档
+### 3. 输入密码
+
+选择文件后会弹出密码输入对话框，输入正确的密码后开始解压。
+
+### 4. 浏览文档
 
 - 解压完成后会自动显示美观的目录页面
 - 点击任意文件名即可在新窗口中打开对应的文档
 - 每个文档都在独立的窗口中显示，支持前进、后退、刷新等操作
 - 可以同时打开多个文档窗口
 
-### 4. 安全退出
+### 5. 安全退出
 
 关闭程序时，所有临时文件会被自动清理，确保数据安全。
 
@@ -151,6 +163,7 @@ crypt-browser/
 ├── build_auto.bat          # 智能编译脚本
 ├── build_simple.bat        # 简化编译脚本（推荐）
 ├── create_test_archive.bat # 测试压缩包创建脚本
+├── test_security.bat       # 安全性对比演示脚本
 ├── test/                   # 测试文件目录
 │   ├── sample1.html       # 测试文档1：功能介绍
 │   ├── sample2.html       # 测试文档2：安全特性

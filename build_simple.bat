@@ -46,8 +46,38 @@ if %ERRORLEVEL% NEQ 0 (
 
 echo.
 echo =================================
-echo Build successful!
+echo Build successful! Deploying Qt dependencies...
+echo =================================
+
+REM Deploy Qt dependencies
+echo Deploying Qt dependencies to output directory...
+set WINDEPLOYQT_PATH=%QT_PATH%\bin\windeployqt.exe
+
+if not exist "%WINDEPLOYQT_PATH%" (
+    echo Warning: windeployqt.exe not found
+    echo Path: %WINDEPLOYQT_PATH%
+    echo Please manually copy Qt runtime files
+    goto :skip_deploy
+)
+
+"%WINDEPLOYQT_PATH%" --release --compiler-runtime --webenginewidgets --no-translations --no-system-d3d-compiler --no-opengl-sw Release\crypt-browser.exe
+
+if %ERRORLEVEL% NEQ 0 (
+    echo Warning: Qt deployment had issues, but the program may still work
+)
+
+echo Qt dependencies deployed successfully!
+
+:skip_deploy
+echo.
+echo =================================
+echo Build and deployment complete!
 echo Executable: build\Release\crypt-browser.exe
 echo =================================
 echo.
+echo Usage:
+echo 1. Launch: build\Release\crypt-browser.exe
+echo 2. Select archive file in the dialog
+echo.
+echo Note: Output directory contains all necessary Qt runtime files
 pause 

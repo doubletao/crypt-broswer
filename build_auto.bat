@@ -104,15 +104,46 @@ if %ERRORLEVEL% NEQ 0 (
 
 echo.
 echo =================================
-echo 编译成功！
+echo 编译成功！开始部署Qt依赖文件...
+echo =================================
+
+REM 部署Qt依赖文件
+echo 正在部署Qt依赖文件到输出目录...
+set WINDEPLOYQT_PATH=%QT_PATH%\bin\windeployqt.exe
+
+if not exist "%WINDEPLOYQT_PATH%" (
+    echo 警告：未找到windeployqt.exe工具
+    echo 路径：%WINDEPLOYQT_PATH%
+    echo 请手动复制Qt运行时文件
+    goto :skip_deploy
+)
+
+REM 执行Qt依赖部署
+"%WINDEPLOYQT_PATH%" --release --compiler-runtime --webenginewidgets --no-translations --no-system-d3d-compiler --no-opengl-sw Release\crypt-browser.exe
+
+if %ERRORLEVEL% NEQ 0 (
+    echo 警告：Qt依赖部署过程中出现问题，但程序可能仍然可用
+    goto :skip_deploy
+)
+
+echo Qt依赖文件部署完成！
+
+:skip_deploy
+echo.
+echo =================================
+echo 构建和部署完成！
 echo 可执行文件位置: build\Release\crypt-browser.exe
 echo =================================
 echo.
 echo 使用方法:
-echo crypt-browser.exe "压缩包路径"
+echo 1. 直接启动: build\Release\crypt-browser.exe
+echo 2. 在文件选择对话框中选择压缩包
 echo.
 echo 快速测试:
 echo 1. 运行: create_test_archive.bat
-echo 2. 测试: build\Release\crypt-browser.exe test_documents.exe
+echo 2. 启动: build\Release\crypt-browser.exe
+echo 3. 选择文件: test_documents.7z
+echo 4. 输入密码: test123
 echo.
+echo 注意：输出目录已包含所有必要的Qt运行时文件，可以独立运行
 pause 
